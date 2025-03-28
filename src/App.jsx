@@ -1,34 +1,78 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import MyLi from './components/MyLi'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [firstname, setFirstname] = useState("")
+  const [lastname, setLastname] = useState("")
+  const [entryData, setEntryData] = useState([])
+
+  function saveHandler() {
+    const entry = {
+      date: new Date().toLocaleString(),
+      firstname: firstname,
+      lastname: lastname
+    }
+
+    setEntryData([...entryData, entry])
+    setFirstname("")
+    setLastname("")
+  }
+
+  function deleteHandler(index) {
+    const nextEntryData = entryData.slice()
+    nextEntryData.splice(index, 1)
+    setEntryData(nextEntryData)
+  }
+
+  function updateHandler(index, newFirstname, newLastname) {
+    const nextEntryData = entryData.slice()
+    nextEntryData[index].firstname = newFirstname
+    nextEntryData[index].lastname = newLastname
+    setEntryData(nextEntryData)
+  }
+
+  const listItems = entryData.map((entry, index) => (
+    <MyLi
+      key={index}
+      date={entry.date}
+      firstname={entry.firstname}
+      lastname={entry.lastname}
+      onDelete={() => deleteHandler(index)}
+      onUpdate={(newFirstname, newLastname) => updateHandler(index, newFirstname, newLastname)}
+    />
+  ))
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {listItems}
+        </tbody>
+      </table>
+
+      <textarea
+        placeholder="Firstname"
+        value={firstname}
+        onChange={(e) => setFirstname(e.target.value)}
+      />
+      <br />
+      <textarea
+        placeholder="Lastname"
+        value={lastname}
+        onChange={(e) => setLastname(e.target.value)}
+      />
+      <br />
+      <button onClick={saveHandler}>Save</button>
+    </div>
   )
 }
 
