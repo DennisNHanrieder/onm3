@@ -23,7 +23,7 @@ The project was built to showcase:
 ## Quick start (clone & run)
 ```bash
 # 1) Clone the repository
-git clone <YOUR_REPO_URL>
+git clone <https://github.com/DennisNHanrieder/onm3.git>
 cd onm3-main/onm3-main
 
 # 2) Install dependencies
