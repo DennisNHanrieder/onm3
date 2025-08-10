@@ -1,4 +1,4 @@
-# entries1
+# Person Entry Maker (React)
 
 ## Overview
 **entries1** is a simple **React + Vite** application demonstrating form-driven CRUD operations, inline editing, and responsive state management with modern React hooks. Users can create, edit, and delete simple person records, each tagged with a timestamp.
